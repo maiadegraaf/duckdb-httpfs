@@ -30,7 +30,7 @@ static HTTPHeaders create_s3_header(string url, string query, string host, strin
                                     string payload_hash = "", string content_type = "") {
 
 	HTTPHeaders res;
-	res["Host"] = host;
+	res["X-Host-Override"] = host;
 	// If access key is not set, we don't set the headers at all to allow accessing public files through s3 urls
 	if (auth_params.secret_access_key.empty() && auth_params.access_key_id.empty()) {
 		return res;
