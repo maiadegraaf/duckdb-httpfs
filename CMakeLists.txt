@@ -37,8 +37,6 @@ if(MINGW)
   set(OPENSSL_USE_STATIC_LIBS TRUE)
 endif()
 
-find_package(OpenSSL REQUIRED)
-include_directories(${OPENSSL_INCLUDE_DIR})
 if(EMSCRIPTEN)
 
 else()
