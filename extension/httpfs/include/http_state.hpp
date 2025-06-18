@@ -6,8 +6,12 @@
 #include "duckdb/common/atomic.hpp"
 #include "duckdb/common/optional_ptr.hpp"
 #include "duckdb/main/client_context_state.hpp"
+#include "duckdb/main/client_context_state.hpp"
+#include "duckdb/common/http_util.hpp"
 
 namespace duckdb {
+
+extern shared_ptr<HTTPUtil> global_http_util;
 
 class CachedFileHandle;
 

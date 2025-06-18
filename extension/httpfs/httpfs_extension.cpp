@@ -6,9 +6,13 @@
 #include "duckdb.hpp"
 #include "s3fs.hpp"
 #include "hffs.hpp"
-#include "crypto.hpp"
+#include "http_state.hpp"
+
+
 
 namespace duckdb {
+
+shared_ptr<HTTPUtil> global_http_util {nullptr};
 
 static void LoadInternal(DatabaseInstance &instance) {
 	auto &fs = instance.GetFileSystem();
@@ -61,7 +65,12 @@ static void LoadInternal(DatabaseInstance &instance) {
 	// HuggingFace options
 	config.AddExtensionOption("hf_max_per_page", "Debug option to limit number of items returned in list requests",
 	                          LogicalType::UBIGINT, Value::UBIGINT(0));
-	config.http_util = make_shared_ptr<HTTPFSUtil>();
+	if (config.http_util && config.http_util->GetName() == "WasmHTTPUtils") {
+		// Already handled, do not override
+		global_http_util = config.http_util;
+	} else {
+		config.http_util = make_shared_ptr<HTTPFSUtil>();
+	}
 
 	auto provider = make_uniq<AWSEnvironmentCredentialsProvider>(config);
 	provider->SetAll();

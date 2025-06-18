@@ -29,7 +29,7 @@ shared_ptr<HTTPUtil> HTTPFSUtil::GetHTTPUtil(optional_ptr<FileOpener> opener) {
 			return config.http_util;
 		}
 	}
-	return make_shared_ptr<HTTPFSUtil>();
+	return global_http_util;
 }
 
 unique_ptr<HTTPParams> HTTPFSUtil::InitializeParameters(optional_ptr<FileOpener> opener,
